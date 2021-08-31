@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.IEmpMapper">
+<insert id="save" parameterType="com.po.Emp">
+insert into emp(ename,fname,sex,address,birthday,depid) values(#{ename},#{fname},#{sex},#{address},#{birthday},#{depid})
+</insert>
+<select id="findMaxEid" resultType="Integer">
+select max(eid) from emp
+</select>
+<select id="findPageAll" resultType="com.po.Emp">
+SELECT e.*,d.depname FROM emp e,dep d WHERE e.depid=d.depid order by eid limit ${(page-1)*rows},${rows}
+</select>
+<select id="findMaxRows" resultType="Integer">
+select count(eid) from emp
+</select>
+<delete id="delete" parameterType="Integer">
+delete from emp where eid=#{eid}
+</delete>
+<select id="findById" resultType="com.po.Emp" parameterType="Integer">
+select e.*,d.depname from emp e,dep d where e.depid=d.depid and eid=#{eid}
+</select>
+<update id="update" parameterType="com.po.Emp">
+update emp set ename=#{ename},fname=#{fname},sex=#{sex},address=#{address},birthday=#{birthday},depid=#{depid} where eid=#{eid}
+</update>
+</mapper>
